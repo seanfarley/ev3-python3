@@ -28,7 +28,7 @@ import threading
 import time
 import datetime
 import math
-import usb.core
+import hid
 
 from ev3.constants import *
 
@@ -341,30 +341,30 @@ class EV3:
         """
         Create a device, that holds an usb-connection to an EV3
         """
-        ev3_devices = usb.core.find(
-            find_all=True,
-            idVendor=ID_VENDOR_LEGO,
-            idProduct=ID_PRODUCT_EV3
-        )
+        ev3_devices = [h for h in hid.enumerate()
+                       if h['vendor_id'] == ID_VENDOR_LEGO]
+
+        found_host = None
         for dev in ev3_devices:
-            if self._device:
+            if found_host:
                 raise ValueError('found multiple ev3 but no argument host was set')
             if host:
-                mac_addr = usb.util.get_string(dev, dev.iSerialNumber)
+                mac_addr = dev['serial_number']
                 if mac_addr.upper() == host.replace(':', '').upper():
-                    self._device = dev
+                    found_host = dev
                     break
             else:
-                self._device = dev
-        if not self._device:
+                found_host = dev
+        if not found_host:
             raise RuntimeError("Lego EV3 not found")
-        # pylint: disable=no-member
-        if self._device.is_kernel_driver_active(0) is True:
-            self._device.detach_kernel_driver(0)
-        self._device.set_configuration()
+
+        self._device = hid.device()
+        self._device.open(ID_VENDOR_LEGO, ID_PRODUCT_EV3,
+                          found_host['serial_number'])
 
         # initial read
-        self._device.read(EP_IN, 1024, 100)
+        self._device.set_nonblocking(1)
+        self._device.read(1024)
         # pylint: enable=no-member
 
     def send_direct_cmd(self, ops: bytes,
@@ -420,7 +420,7 @@ class EV3:
             self._socket.send(cmd)
         elif self._protocol is USB:
             # pylint: disable=no-member
-            self._device.write(EP_OUT, cmd, 100)
+            self._device.write(list(cmd) + [0] * 100)
             # pylint: enable=no-member
         else:
             raise RuntimeError('No EV3 connected')
@@ -458,7 +458,7 @@ class EV3:
             if self._protocol in [BLUETOOTH, WIFI]:
                 reply = self._socket.recv(1024)
             else:
-                reply = bytes(self._device.read(EP_IN, 1024, 0))
+                reply = bytes(self._device.read(1024))
             # pylint: enable=no-member
             len_data = struct.unpack('<H', reply[:2])[0] + 2
             reply_counter = reply[2:4]
@@ -535,7 +535,7 @@ class EV3:
         if self._protocol in [BLUETOOTH, WIFI]:
             self._socket.send(cmd)
         elif self._protocol is USB:
-            self._device.write(EP_OUT, cmd, 100)
+            self._device.write(list(cmd) + [0] * 100)
         else:
             raise RuntimeError('No EV3 connected')
         # pylint: enable=no-member
@@ -570,7 +570,7 @@ class EV3:
             if self._protocol in [BLUETOOTH, WIFI]:
                 reply = self._socket.recv(1024)
             else:
-                reply = bytes(self._device.read(EP_IN, 1024, 0))
+                reply = bytes(self._device.read(1024))
             # pylint: enable=no-member
             len_data = struct.unpack('<H', reply[:2])[0] + 2
             reply_counter = reply[2:4]
@@ -606,7 +606,7 @@ class EV3:
         put a foreign reply to the stack
         """
         if counter in self._foreign:
-            raise ValueError('reply with counter ' + counter + ' already exists')
+            raise ValueError('reply with counter ' + str(counter) + ' already exists')
         else:
             self._foreign[counter] = reply
 
@@ -626,7 +626,7 @@ class EV3:
 # pylint: disable=missing-docstring
 # pylint: disable=global-statement
 if __name__ == "__main__":
-    my_ev3 = EV3(protocol=BLUETOOTH, host='00:16:53:42:2B:99')
+    my_ev3 = EV3(protocol=USB)
     my_ev3.verbosity = 1
 
     led_sequence = [LED_RED, LED_GREEN, LED_ORANGE, LED_GREEN]
