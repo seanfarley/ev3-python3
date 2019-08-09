@@ -108,8 +108,9 @@ class EV3:
         """
         Create a socket, that holds a bluetooth-connection to an EV3
         """
-        self._socket = bluetooth.BluetoothSocket(bluetooth.RFCOMM)
-        self._socket.bind((host, 0))
+        # self._socket = bluetooth.BluetoothSocket(bluetooth.RFCOMM)
+        # self._socket.bind((host, 0))
+        raise NotImplementedError("Bluetooth isn't yet implemented")
 
     def _connect_wifi(self, host: str) -> int:
         """
