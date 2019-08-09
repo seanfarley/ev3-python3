@@ -328,9 +328,9 @@ class EV3:
           reply (in case of SYSTEM_COMMAND_NO_REPLY: counter)
         """
         if reply:
-            cmd_type = _SYSTEM_COMMAND_REPLY
+            cmd_type = SYSTEM_COMMAND_REPLY
         else:
-            cmd_type = _SYSTEM_COMMAND_NO_REPLY
+            cmd_type = SYSTEM_COMMAND_NO_REPLY
         self._lock.acquire()
         if self._msg_cnt < 65535:
             self._msg_cnt += 1
