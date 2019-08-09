@@ -1,19 +1,17 @@
-"""
-EV3 constants for serial communication.
-"""
+"""EV3 constants for serial communication."""
 
 WIFI      = 'Wifi'
 BLUETOOTH = 'Bluetooth'
 USB       = 'Usb'
 
-STD       = 'STD'                     # reply if global_mem, wait for reply
-ASYNC     = 'ASYNC'                   # reply if global_mem, never wait for reply
-SYNC      = 'SYNC'                    # always with reply, always wait for reply
+STD       = 'STD'               # reply if global_mem, wait for reply
+ASYNC     = 'ASYNC'             # reply if global_mem, never wait for reply
+SYNC      = 'SYNC'              # always with reply, always wait for reply
 
-ID_VENDOR_LEGO = 0x0694               # Usb-Identification of the device
+ID_VENDOR_LEGO = 0x0694         # Usb-Identification of the device
 ID_PRODUCT_EV3 = 0x0005
 
-EP_IN  = 0x81                         # Usb-Endpoints
+EP_IN  = 0x81                   # Usb-Endpoints
 EP_OUT = 0x01
 
 DIRECT_COMMAND_REPLY     = b'\x00'
@@ -328,19 +326,19 @@ GRAPH_SETUP               = b'\x1E'
 GRAPH_DRAW                = b'\x1F'
 TEXTBOX                   = b'\x20'
 
-opTimer_Wait              = b'\x85'   # TIMER
+opTimer_Wait              = b'\x85'  # TIMER
 opTimer_Ready             = b'\x86'
 opTimer_Read              = b'\x87'
-opBp0                     = b'\x88'   # VM
+opBp0                     = b'\x88'  # VM
 opBp1                     = b'\x89'
 opBp2                     = b'\x8A'
 opBp3                     = b'\x8B'
 opBp_Set                  = b'\x8C'
 opMath                    = b'\x8D'
 opRandom                  = b'\x8E'
-opTimer_Read_Us           = b'\x8F'   # TIMER
-opKeep_Alive              = b'\x90'   # UI
-opCom_Read                = b'\x91'   # COM
+opTimer_Read_Us           = b'\x8F'  # TIMER
+opKeep_Alive              = b'\x90'  # UI
+opCom_Read                = b'\x91'  # COM
 
 # COM_READ_SUBCODES
 COMMAND                   = b'\x0E'
@@ -350,7 +348,7 @@ opCom_Write               = b'\x92'
 # COM_WRITE_SUBCODES
 REPLY                     = b'\x0E'
 
-opSound                   = b'\x94'   # SOUND
+opSound                   = b'\x94'  # SOUND
 
 # SOUND_SUBCODES
 BREAK                     = b'\x00'
@@ -396,7 +394,7 @@ opInput_Ready             = b'\x9C'
 opInput_ReadSI            = b'\x9D'
 opInput_ReadExt           = b'\x9E'
 opInput_Write             = b'\x9F'
-opOutput_Get_Type         = b'\xA0'   # OUTPUT
+opOutput_Get_Type         = b'\xA0'  # OUTPUT
 opOutput_Set_Type         = b'\xA1'
 opOutput_Reset            = b'\xA2'
 opOutput_Stop             = b'\xA3'
@@ -501,7 +499,8 @@ opCom_Ready               = b'\xD0'
 opCom_Readdata            = b'\xD1'
 opCom_Writedata           = b'\xD2'
 opCom_Get                 = b'\xD3'
-    # COM_GET_SUBCODES
+
+# COM_GET_SUBCODES
 GET_ON_OFF                = b'\x01'
 GET_VISIBLE               = b'\x02'
 GET_RESULT                = b'\x04'
@@ -600,34 +599,34 @@ ANY_BUTTON                = b'\x07'
 BUTTONTYPES               = b'\x08'
 
 # MATHTYPES
-EXP                       = b'\x01' #!< e^x r = expf(x)
-MOD                       = b'\x02' #!< Modulo r = fmod(x'y)
-FLOOR                     = b'\x03' #!< Floor r = floor(x)
-CEIL                      = b'\x04' #!< Ceiling r = ceil(x)
-ROUND                     = b'\x05' #!< Round r = round(x)
-ABS                       = b'\x06' #!< Absolute r = fabs(x)
-NEGATE                    = b'\x07' #!< Negate r = 0.0 - x
-SQRT                      = b'\x08' #!< Squareroot r = sqrt(x)
-LOG                       = b'\x09' #!< Log r = log10(x)
-LN                        = b'\x0A' #!< Ln r = log(x)
-SIN                       = b'\x0B' #!<
-COS                       = b'\x0C' #!<
-TAN                       = b'\x0D' #!<
-ASIN                      = b'\x0E' #!<
-ACOS                      = b'\x0F' #!<
-ATAN                      = b'\x10' #!<
-MOD8                      = b'\x11' #!< Modulo DATA8 r = x % y
-MOD16                     = b'\x12' #!< Modulo DATA16 r = x % y
-MOD32                     = b'\x13' #!< Modulo DATA32 r = x % y
-POW                       = b'\x14' #!< Exponent r = powf(x,y)
+EXP                       = b'\x01'  # !< e^x r = expf(x)
+MOD                       = b'\x02'  # !< Modulo r = fmod(x'y)
+FLOOR                     = b'\x03'  # !< Floor r = floor(x)
+CEIL                      = b'\x04'  # !< Ceiling r = ceil(x)
+ROUND                     = b'\x05'  # !< Round r = round(x)
+ABS                       = b'\x06'  # !< Absolute r = fabs(x)
+NEGATE                    = b'\x07'  # !< Negate r = 0.0 - x
+SQRT                      = b'\x08'  # !< Squareroot r = sqrt(x)
+LOG                       = b'\x09'  # !< Log r = log10(x)
+LN                        = b'\x0A'  # !< Ln r = log(x)
+SIN                       = b'\x0B'  # !<
+COS                       = b'\x0C'  # !<
+TAN                       = b'\x0D'  # !<
+ASIN                      = b'\x0E'  # !<
+ACOS                      = b'\x0F'  # !<
+ATAN                      = b'\x10'  # !<
+MOD8                      = b'\x11'  # !< Modulo DATA8 r = x % y
+MOD16                     = b'\x12'  # !< Modulo DATA16 r = x % y
+MOD32                     = b'\x13'  # !< Modulo DATA32 r = x % y
+POW                       = b'\x14'  # !< Exponent r = powf(x,y)
 # !< Truncate r = (float)((int)(x * pow(y))) / pow(y)
 TRUNC                     = b'\x15'
 
 # BROWSERTYPES
-BROWSE_FOLDERS            = b'\x00' # folders
-BROWSE_FOLDS_FILES        = b'\x01' # folders and files
-BROWSE_CACHE              = b'\x02' # cached / recent files
-BROWSE_FILES              = b'\x03' # files
+BROWSE_FOLDERS            = b'\x00'  # folders
+BROWSE_FOLDS_FILES        = b'\x01'  # folders and files
+BROWSE_CACHE              = b'\x02'  # cached / recent files
+BROWSE_FILES              = b'\x03'  # files
 
 # FONTTYPES
 NORMAL_FONT               = b'\x00'
@@ -636,11 +635,11 @@ LARGE_FONT                = b'\x02'
 TINY_FONT                 = b'\x03'
 
 # ICONTYPES
-NORMAL_ICON               = b'\x00' # 24x12_Files_Folders_Settings.bmp
+NORMAL_ICON               = b'\x00'  # 24x12_Files_Folders_Settings.bmp
 SMALL_ICON                = b'\x01'
-LARGE_ICON                = b'\x02' # 24x22_Yes_No_OFF_FILEOps.bmp
+LARGE_ICON                = b'\x02'  # 24x22_Yes_No_OFF_FILEOps.bmp
 MENU_ICON                 = b'\x03'
-ARROW_ICON                = b'\x04' # 8x12_miniArrows.bmp
+ARROW_ICON                = b'\x04'  # 8x12_miniArrows.bmp
 
 # S_ICON_NO
 SICON_CHARGING            = b'\x00'
@@ -729,10 +728,10 @@ WARN_MEMORY               = b'\x1B'
 ICON_STAR                 = b'\x00'
 ICON_LOCKSTAR             = b'\x01'
 ICON_LOCK                 = b'\x02'
-ICON_PC                   = b'\x03' # Bluetooth type PC
-ICON_PHONE                = b'\x04' # Bluetooth type PHONE
-ICON_BRICK                = b'\x05' # Bluetooth type BRICK
-ICON_UNKNOWN              = b'\x06' # Bluetooth type UNKNOWN
+ICON_PC                   = b'\x03'  # Bluetooth type PC
+ICON_PHONE                = b'\x04'  # Bluetooth type PHONE
+ICON_BRICK                = b'\x05'  # Bluetooth type BRICK
+ICON_UNKNOWN              = b'\x06'  # Bluetooth type UNKNOWN
 ICON_FROM_FOLDER          = b'\x07'
 ICON_CHECKBOX             = b'\x08'
 ICON_CHECKED              = b'\x09'
@@ -743,10 +742,10 @@ ICON_LEFT                 = b'\x01'
 ICON_RIGHT                = b'\x02'
 
 #  BTTYPE
-BTTYPE_PC                 = b'\x03' # Bluetooth type PC
-BTTYPE_PHONE              = b'\x04' # Bluetooth type PHONE
-BTTYPE_BRICK              = b'\x05' # Bluetooth type BRICK
-BTTYPE_UNKNOWN            = b'\x06' # Bluetooth type UNKNOWN
+BTTYPE_PC                 = b'\x03'  # Bluetooth type PC
+BTTYPE_PHONE              = b'\x04'  # Bluetooth type PHONE
+BTTYPE_BRICK              = b'\x05'  # Bluetooth type BRICK
+BTTYPE_UNKNOWN            = b'\x06'  # Bluetooth type UNKNOWN
 
 # LEDPATTERN
 LED_OFF                   = b'\x00'
@@ -761,11 +760,11 @@ LED_RED_PULSE             = b'\x08'
 LED_ORANGE_PULSE          = b'\x09'
 
 # LEDTYPE
-LED_ALL                   = b'\x00' # All LEDs
-LED_RR                    = b'\x01' # Right red
-LED_RG                    = b'\x02' # Right green
-LED_LR                    = b'\x03' # Left red
-LED_LG                    = b'\x04' # Left green
+LED_ALL                   = b'\x00'  # All LEDs
+LED_RR                    = b'\x01'  # Right red
+LED_RG                    = b'\x02'  # Right green
+LED_LR                    = b'\x03'  # Left red
+LED_LG                    = b'\x04'  # Left green
 
 # FILETYPE
 FILETYPE_UNKNOWN          = b'\x00'
@@ -782,32 +781,32 @@ TYPE_RESTART_BROWSER      = b'\x21'
 TYPE_REFRESH_BROWSER      = b'\x22'
 
 # RESULT
-OK                        = b'\x00' # No errors to report
-BUSY                      = b'\x01' # Busy - try again
-FAIL                      = b'\x02' # Something failed
-STOP                      = b'\x04' # Stopped
+OK                        = b'\x00'  # No errors to report
+BUSY                      = b'\x01'  # Busy - try again
+FAIL                      = b'\x02'  # Something failed
+STOP                      = b'\x04'  # Stopped
 
 # DATA_FORMAT
-DATA_8                    = b'\x00' # DATA8 (don't change)
-DATA_16                   = b'\x01' # DATA16 (don't change)
-DATA_32                   = b'\x02' # DATA32 (don't change)
-DATA_F                    = b'\x03' # DATAF (don't change)
-DATA_S                    = b'\x04' # Zero terminated string
-DATA_A                    = b'\x05' # Array handle
-DATA_V                    = b'\x07' # Variable type
-DATA_PCT                  = b'\x10' # Percent (used in opINPUT_READEXT)
-DATA_RAW                  = b'\x12' # Raw (used in opINPUT_READEXT)
-DATA_SI                   = b'\x13' # SI unit (used in opINPUT_READEXT)
+DATA_8                    = b'\x00'  # DATA8 (don't change)
+DATA_16                   = b'\x01'  # DATA16 (don't change)
+DATA_32                   = b'\x02'  # DATA32 (don't change)
+DATA_F                    = b'\x03'  # DATAF (don't change)
+DATA_S                    = b'\x04'  # Zero terminated string
+DATA_A                    = b'\x05'  # Array handle
+DATA_V                    = b'\x07'  # Variable type
+DATA_PCT                  = b'\x10'  # Percent (used in opINPUT_READEXT)
+DATA_RAW                  = b'\x12'  # Raw (used in opINPUT_READEXT)
+DATA_SI                   = b'\x13'  # SI unit (used in opINPUT_READEXT)
 
 # DEL
-DEL_NONE                  = b'\x00' # No delimiter at all
-DEL_TAB                   = b'\x01' # Use tab as delimiter
-DEL_SPACE                 = b'\x02' # Use space as delimiter
-DEL_RETURN                = b'\x03' # Use return as delimiter
-DEL_COLON                 = b'\x04' # Use colon as delimiter
-DEL_COMMA                 = b'\x05' # Use comma as delimiter
-DEL_LINEFEED              = b'\x06' # Use line feed as delimiter
-DEL_CRLF                  = b'\x07' # Use return+line feed as delimiter
+DEL_NONE                  = b'\x00'  # No delimiter at all
+DEL_TAB                   = b'\x01'  # Use tab as delimiter
+DEL_SPACE                 = b'\x02'  # Use space as delimiter
+DEL_RETURN                = b'\x03'  # Use return as delimiter
+DEL_COLON                 = b'\x04'  # Use colon as delimiter
+DEL_COMMA                 = b'\x05'  # Use comma as delimiter
+DEL_LINEFEED              = b'\x06'  # Use line feed as delimiter
+DEL_CRLF                  = b'\x07'  # Use return+line feed as delimiter
 
 # HWTYPE
 HW_USB                    = b'\x01'
@@ -846,13 +845,13 @@ WARNING_BATTLOW           = b'\x40'
 WARNING_BUSY              = b'\x80'
 
 # OBJSTAT
-RUNNING                   = b'\x10' # Object code is running
-WAITING                   = b'\x20' # Object is waiting for final trigger
-STOPPED                   = b'\x40' # Object is stopped or not triggered yet
+RUNNING                   = b'\x10'  # Object code is running
+WAITING                   = b'\x20'  # Object is waiting for final trigger
+STOPPED                   = b'\x40'  # Object is stopped or not triggered yet
 # Object is halted because a call is in progress
 HALTED                    = b'\x80'
 
-#DEVCMD
-DEVCMD_RESET              = b'\x11' # UART device reset
-DEVCMD_FIRE               = b'\x11' # UART device fire (ultrasonic)
-DEVCMD_CHANNEL            = b'\x12' # UART device channel (IR seeker)
+# DEVCMD
+DEVCMD_RESET              = b'\x11'  # UART device reset
+DEVCMD_FIRE               = b'\x11'  # UART device fire (ultrasonic)
+DEVCMD_CHANNEL            = b'\x12'  # UART device channel (IR seeker)
