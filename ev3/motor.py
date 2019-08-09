@@ -1,7 +1,10 @@
+"""This module is for controlling the EV3 motor."""
+
 from . import (
     constants,
     utils,
 )
+
 
 def port_motor_input(port_output: int) -> bytes:
     """
@@ -9,10 +12,15 @@ def port_motor_input(port_output: int) -> bytes:
     """
     if port_output == constants.PORT_A:
         return utils.LCX(16)
-    elif port_output == constants.PORT_B:
+
+    if port_output == constants.PORT_B:
         return utils.LCX(17)
-    elif port_output == constants.PORT_C:
+
+    if port_output == constants.PORT_C:
         return utils.LCX(18)
-    elif port_output == constants.PORT_D:
+
+    if port_output == constants.PORT_D:
         return utils.LCX(19)
-    raise ValueError("port_output needs to be one of the port numbers [1, 2, 4, 8]")
+
+    raise ValueError("port_output needs to be one of "
+                     "the port numbers [1, 2, 4, 8]")
