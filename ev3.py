@@ -32,6 +32,7 @@ import hid
 
 from ev3.constants import *
 from ev3.utils import *
+from ev3.error import *
 
 def port_motor_input(port_output: int) -> bytes:
     """
@@ -47,18 +48,6 @@ def port_motor_input(port_output: int) -> bytes:
         return LCX(19)
     else:
         raise ValueError("port_output needs to be one of the port numbers [1, 2, 4, 8]")
-
-class DirCmdError(Exception):
-    """
-    Direct command replies error
-    """
-    pass
-
-class SysCmdError(Exception):
-    """
-    System command replies error
-    """
-    pass
 
 # pylint: disable=too-many-arguments
 # pylint: disable=too-many-instance-attributes
