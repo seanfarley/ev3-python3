@@ -34,21 +34,6 @@ from ev3.constants import *
 from ev3.utils import *
 from ev3.error import *
 
-def port_motor_input(port_output: int) -> bytes:
-    """
-    get corresponding input motor port (from output motor port)
-    """
-    if port_output == PORT_A:
-        return LCX(16)
-    elif port_output == PORT_B:
-        return LCX(17)
-    elif port_output == PORT_C:
-        return LCX(18)
-    elif port_output == PORT_D:
-        return LCX(19)
-    else:
-        raise ValueError("port_output needs to be one of the port numbers [1, 2, 4, 8]")
-
 # pylint: disable=too-many-arguments
 # pylint: disable=too-many-instance-attributes
 class EV3:
@@ -508,18 +493,3 @@ if __name__ == "__main__":
     for i in range(8):
         next_color()
         time.sleep(1)
-
-    ops_no = opNop
-
-    print("*** SYNC ***")
-    my_ev3.sync_mode = SYNC
-    my_ev3.send_direct_cmd(ops_no)
-
-    print("*** ASYNC ***")
-    my_ev3.sync_mode = ASYNC
-    counter_first = my_ev3.send_direct_cmd(ops_no, global_mem=1)
-    for i in range(10):
-        counter_last = my_ev3.send_direct_cmd(ops_no, global_mem=1)
-    my_ev3.wait_for_reply(counter_last)
-    my_ev3.wait_for_reply(counter_first)
-    print("*** finished ***")
