@@ -22,8 +22,13 @@ import math
 import struct
 import time
 import numbers
-import ev3
 import task
+
+import ev3
+import ev3.constants as const
+import ev3.motor
+import ev3.utils
+
 
 DRIVE_TYPE_STRAIGHT = "straight"
 DRIVE_TYPE_TURN = "turn"
@@ -31,23 +36,16 @@ DRIVE_TYPE_ROTATE_TO = "rotate_to"
 DRIVE_TYPE_DRIVE_TO = "drive_to"
 DRIVE_TYPE_STOP = "stop"
 
-# pylint: disable=too-many-instance-attributes
+
 class TwoWheelVehicle(ev3.EV3):
     """
     ev3.EV3 vehicle with two drived Wheels
     """
 
     # pylint: disable=too-many-arguments
-    def __init__(
-            self,
-            radius_wheel: float,
-            tread: float,
-            protocol: str=None,
-            host: str=None,
-            ev3_obj: ev3.EV3=None
-    ):
-        """
-        Establish a connection to a LEGO EV3 device
+    def __init__(self, radius_wheel: float, tread: float, protocol: str = None,
+                 host: str = None, ev3_obj: ev3.EV3 = None):
+        """Establish a connection to a LEGO EV3 device
 
         Arguments:
         radius_wheel: radius of the wheels im meter
@@ -65,8 +63,8 @@ class TwoWheelVehicle(ev3.EV3):
         self._radius_wheel = radius_wheel
         self._tread = tread
         self._polarity = 1
-        self._port_left = ev3.PORT_D
-        self._port_right = ev3.PORT_A
+        self._port_left = const.PORT_D
+        self._port_right = const.PORT_A
         self._orientation = 0.0
         self._pos_x = 0.0
         self._pos_y = 0.0
@@ -88,6 +86,7 @@ class TwoWheelVehicle(ev3.EV3):
         polarity of motor rotation (values: -1, 1, default: 1)
         """
         return self._polarity
+
     @polarity.setter
     def polarity(self, value: int):
         assert isinstance(value, int), "polarity needs to be of type int"
@@ -96,14 +95,13 @@ class TwoWheelVehicle(ev3.EV3):
 
     @property
     def port_right(self):
-        """
-        port of right wheel (default: PORT_A)
-        """
+        """Port of right wheel (default: PORT_A)"""
         return self._port_right
+
     @port_right.setter
     def port_right(self, value: int):
         assert isinstance(value, int), "port needs to be of type int"
-        assert value in [ev3.PORT_A, ev3.PORT_B, ev3.PORT_C, ev3.PORT_D], \
+        assert value in [const.PORT_A, const.PORT_B, const.PORT_C, const.PORT_D], \
             "value is not an allowed port"
         self._port_right = value
 
@@ -113,13 +111,13 @@ class TwoWheelVehicle(ev3.EV3):
         port of left wheel (default: PORT_D)
         """
         return self._port_left
+
     @port_left.setter
     def port_left(self, value: int):
         assert isinstance(value, int), "port needs to be of type int"
-        assert value in [ev3.PORT_A, ev3.PORT_B, ev3.PORT_C, ev3.PORT_D], \
+        assert value in [const.PORT_A, const.PORT_B, const.PORT_C, const.PORT_D], \
             "value is not an allowed port"
         self._port_left = value
-
 
     @property
     def pos_x(self):
@@ -145,17 +143,15 @@ class TwoWheelVehicle(ev3.EV3):
         return o_tmp - 180
 
     def _reaction(self):
-        if self._protocol == ev3.BLUETOOTH:
+        if self._protocol == const.BLUETOOTH:
             return 0.04
-        elif self._protocol == ev3.WIFI:
+        elif self._protocol == const.WIFI:
             return 0.02
-        else:
-            return 0.01
+
+        return 0.01
 
     def _update(self, pos: list) -> None:
-        """
-        calculate new position of vehicle
-        """
+        """Calculate new position of vehicle"""
         if self._pos is None:
             self._orig_diff = pos[1] - pos[0]
             self._pos = pos
@@ -195,22 +191,22 @@ class TwoWheelVehicle(ev3.EV3):
         read positions of the wheels (returns operations)
         """
         return b''.join([
-            ev3.opInput_Device,
-            ev3.READY_RAW,
-            ev3.LCX(0),                             # LAYER
-            ev3.port_motor_input(self._port_left),  # NO
-            ev3.LCX(7),                             # TYPE - EV3-Large-Motor
-            ev3.LCX(1),                             # MODE - Degree
-            ev3.LCX(1),                             # VALUES
-            ev3.GVX(0),                             # VALUE1
-            ev3.opInput_Device,
-            ev3.READY_RAW,
-            ev3.LCX(0),                             # LAYER
-            ev3.port_motor_input(self._port_right), # NO
-            ev3.LCX(7),                             # TYPE - EV3-Large-Motor
-            ev3.LCX(0),                             # MODE - Degree
-            ev3.LCX(1),                             # VALUES
-            ev3.GVX(4)                              # VALUE1
+            const.opInput_Device,
+            const.READY_RAW,
+            ev3.utils.LCX(0),                             # LAYER
+            ev3.motor.port_motor_input(self._port_left),  # NO
+            ev3.utils.LCX(7),                             # TYPE - EV3-Large-Motor
+            ev3.utils.LCX(1),                             # MODE - Degree
+            ev3.utils.LCX(1),                             # VALUES
+            ev3.utils.GVX(0),                             # VALUE1
+            const.opInput_Device,
+            const.READY_RAW,
+            ev3.utils.LCX(0),                             # LAYER
+            ev3.motor.port_motor_input(self._port_right), # NO
+            ev3.utils.LCX(7),                             # TYPE - EV3-Large-Motor
+            ev3.utils.LCX(0),                             # MODE - Degree
+            ev3.utils.LCX(1),                             # VALUES
+            ev3.utils.GVX(4)                              # VALUE1
         ])
 
     def _test_o(self) -> float:
@@ -310,7 +306,7 @@ class TwoWheelVehicle(ev3.EV3):
            100: turn left with unmoved left wheel
            200: circle left on place
         """
-        assert self._sync_mode != ev3.SYNC, 'no unlimited operations allowed in sync_mode SYNC'
+        assert self._sync_mode != const.SYNC, 'no unlimited operations allowed in sync_mode SYNC'
         assert isinstance(speed, int), "speed needs to be an integer value"
         assert -100 <= speed and speed <= 100, "speed needs to be in range [-100 - 100]"
         assert isinstance(turn, int), "turn needs to be an integer value"
@@ -332,16 +328,16 @@ class TwoWheelVehicle(ev3.EV3):
         if self._port_left < self._port_right:
             turn *= -1
         ops = b''.join([
-            ev3.opOutput_Step_Sync,
-            ev3.LCX(0),                                  # LAYER
-            ev3.LCX(self._port_left + self._port_right), # NOS
-            ev3.LCX(speed),
-            ev3.LCX(turn),
-            ev3.LCX(0),                                  # STEPS
-            ev3.LCX(0),                                  # BRAKE
-            ev3.opOutput_Start,
-            ev3.LCX(0),                                  # LAYER
-            ev3.LCX(self._port_left + self._port_right)  # NOS
+            const.opOutput_Step_Sync,
+            ev3.utils.LCX(0),                                  # LAYER
+            ev3.utils.LCX(self._port_left + self._port_right), # NOS
+            ev3.utils.LCX(speed),
+            ev3.utils.LCX(turn),
+            ev3.utils.LCX(0),                                  # STEPS
+            ev3.utils.LCX(0),                                  # BRAKE
+            const.opOutput_Start,
+            ev3.utils.LCX(0),                                  # LAYER
+            ev3.utils.LCX(self._port_left + self._port_right)  # NOS
         ])
         reply = self.send_direct_cmd(ops + self._ops_pos(), global_mem=8)
         pos = struct.unpack('<ii', reply[5:])
@@ -352,7 +348,7 @@ class TwoWheelVehicle(ev3.EV3):
         self._speed = speed
         self._moves = True
 
-    def stop(self, brake: bool=False) -> None:
+    def stop(self, brake: bool = False) -> None:
         """
         Stop movement of the vehicle
 
@@ -365,17 +361,17 @@ class TwoWheelVehicle(ev3.EV3):
         else:
             brake_int = 0
         ops = b''.join([
-            ev3.opOutput_Stop,
-            ev3.LCX(0),                                  # LAYER
-            ev3.LCX(self._port_left + self._port_right), # NOS
-            ev3.LCX(brake_int)                           # BRAKE
+            const.opOutput_Stop,
+            ev3.utils.LCX(0),                                  # LAYER
+            ev3.utils.LCX(self._port_left + self._port_right), # NOS
+            ev3.utils.LCX(brake_int)                           # BRAKE
         ])
         reply = self.send_direct_cmd(ops + self._ops_pos(), global_mem=8)
         pos = struct.unpack('<ii', reply[5:])
         self._update(pos)
         self._moves = False
 
-    def drive_straight(self, speed: int, distance: float=None) -> None:
+    def drive_straight(self, speed: int, distance: float = None) -> None:
         """
         Drive the vehicle straight forward or backward.
 
@@ -410,13 +406,8 @@ class TwoWheelVehicle(ev3.EV3):
                          self._pos[1] + direction * step]
             self._test_args = (direction, final_pos)
 
-    def drive_turn(
-            self,
-            speed: int,
-            radius_turn: float,
-            angle: float=None,
-            right_turn: bool=False
-    ) -> None:
+    def drive_turn(self, speed: int, radius_turn: float, angle: float = None,
+                   right_turn: bool = False) -> None:
         """
         Drive the vehicle a turn with given radius.
 
@@ -555,7 +546,7 @@ class TwoWheelVehicle(ev3.EV3):
         diff_x = pos_x - self._pos_x
         diff_y = pos_y - self._pos_y
         if abs(diff_x) > abs(diff_y):
-            direct = math.degrees(math.atan(diff_y/diff_x))
+            direct = math.degrees(math.atan(diff_y / diff_x))
         else:
             fract = diff_x / diff_y
             sign = math.copysign(1, fract)
@@ -655,15 +646,17 @@ class TwoWheelVehicle(ev3.EV3):
             DRIVE_TYPE_DRIVE_TO + ' needs parameter pos_y'
         assert isinstance(brake, bool), \
             "brake needs to be a bool value"
+
         assert exc is None or isinstance(exc, task.ExceptionHandler), \
             "exc needs to be an ExceptionHandler"
         if not exc:
-            exc = task.Task.exc_default
+            exc = task.Task._exc_default
 
         class _Drive(task.Task):
             def stop(self):
                 super().stop()
                 self._time_action = time.time()
+
 
         # pylint: disable=redefined-variable-type
         if drive_type == DRIVE_TYPE_STRAIGHT:
