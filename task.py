@@ -35,7 +35,7 @@ class ExceptionHandler:
     Handles Exceptions of task objects
     If anywhere an exceptions occured and was put to the ExceptionHandler,
     any thread that uses the same instance of ExceptionHandler exits,
-    when it calls its method fire 
+    when it calls its method fire
     """
     def __init__(self):
         self._exc = False
@@ -79,7 +79,7 @@ class Task:
     """
     _exc_default = ExceptionHandler()
     _contained_register = {}
-    
+
     def __init__(self, action: typing.Callable, **kwargs):
         """
         Construct a new 'Task' object
@@ -294,7 +294,7 @@ class Task:
 
     def join(self) -> None:
         """
-        joins the thread of the task 
+        joins the thread of the task
         """
         try:
             assert self._root is self, "only root tasks can be joined"
@@ -569,7 +569,7 @@ class Task:
         self._action(*self._args, **self._kwargs)
         self._wrapper2()
         return -1
-    
+
     def _wrapper1(self) -> None:
         if hasattr(self._action, '__self__') and \
            isinstance(self._action.__self__, Task) and \
@@ -734,7 +734,7 @@ class Task:
     @property
     def time_action(self) -> float:
         """
-        time of actual (activity is ACTIVITY_BUSY) or next action 
+        time of actual (activity is ACTIVITY_BUSY) or next action
         is in the format of time.time()
         """
         self._exc.fire()
@@ -752,7 +752,7 @@ class Task:
     @property
     def time_action_no_lock(self) -> float:
         """
-        time of actual (activity is ACTIVITY_BUSY) or next action 
+        time of actual (activity is ACTIVITY_BUSY) or next action
         is in the format of time.time()
         """
         min = self._time_action
@@ -960,9 +960,7 @@ class Task:
 
     @property
     def exc_default(self):
-        """
-        default exception
-        """
+        """default exception"""
         return self._exc_default
 
 class Periodic(Task):
@@ -1192,5 +1190,3 @@ if __name__ == "__main__":
 
     Repeated(t.start, num=2).start().join()
     print("*** done (two times) ***")
-    
-    
