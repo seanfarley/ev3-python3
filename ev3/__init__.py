@@ -266,12 +266,22 @@ class EV3:
                     )
                 )
             return reply
+        loop_counter = 0
         while True:
             if self._protocol in [const.BLUETOOTH, const.WIFI]:
                 reply = self._socket.recv(1024)
             else:
                 reply = bytes(self._device.read(1024))
-            len_data = struct.unpack('<H', reply[:2])[0] + 2
+            try:
+                len_data = struct.unpack('<H', reply[:2])[0] + 2
+            except struct.error:
+                time.sleep(0.01)
+                loop_counter += 1
+                if loop_counter > 100:
+                    raise Exception("More than %d loops with no response" % loop_counter)
+                continue
+
+
             reply_counter = reply[2:4]
             if self._verbosity >= 1:
                 now = datetime.datetime.now().strftime('%H:%M:%S.%f')
