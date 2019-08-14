@@ -11,6 +11,8 @@ from . import (
     error,
 )
 
+from .constants import *  # noqa
+
 
 class EV3:
     """Object to communicate with a LEGO EV3 using direct commands"""
