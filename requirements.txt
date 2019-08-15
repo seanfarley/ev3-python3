@@ -1,0 +1,10 @@
+ipython
+cupy
+numpy
+jupyter
+notebook
+pillow
+scipy
+hidapi
+cython
+chainercv
