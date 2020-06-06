@@ -1,0 +1,15 @@
+BEFORE I FORGET:
+
+- Needed more micro-usb powercords (must have forgot some in the office)
+- More "building up" a command:
+  - go from sending a raw command
+  - to changing LED (built-in to ev3)
+  - to finding the connected device (wheel)
+  - to moving the wheel
+- One person was clearly not able to do much and left early since his partner was kind of way more advanced and finished the code for them both; not sure what to do with this situation
+- One person with linux could not connect to the ev3s nor nanos (but could connect to the internet??)
+- Same linux machine couldn't use HID because of udev; fucking YEAR OF THE LINUX DESKTOP
+- Need to remove the threading code because 1) it doesn't work and 2) is wayyyyy easier to explain time.sleep
+- Need to improve finding the other sensors (push button, IR, echo, etc.)
+- More explanation of the opencv bounding boxes and doing the math
+- Fix turning to make it easier and more straight-forward (ha! the puns)
