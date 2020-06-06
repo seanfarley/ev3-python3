@@ -1,18 +1,18 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 import curses
 
-import ev3
-import ev3_vehicle
+# import ev3
+# import ev3_vehicle
 
 
 def main(screen):
 
-    vehicle = ev3_vehicle.TwoWheelVehicle(
-        0.02128,                 # radius_wheel
-        0.1175,                  # tread
-        protocol=ev3.constants.USB,
-    )
+    # vehicle = ev3_vehicle.TwoWheelVehicle(
+    #     0.02128,                 # radius_wheel
+    #     0.1175,                  # tread
+    #     protocol=ev3.constants.USB,
+    # )
 
     # turn off input echoing
     curses.noecho()
@@ -38,12 +38,12 @@ def main(screen):
                 speed *= -1
 
             screen.addstr(1, 0, f'Driving {curses.keyname(char).decode():<20} {i}')
-            if char in (curses.KEY_UP, curses.KEY_DOWN):
-                vehicle._drive_straight(speed, 0.1)
-            else:
-                vehicle._drive_turn(speed, 0.25, 60, speed < 0)
+            # if char in (curses.KEY_UP, curses.KEY_DOWN):
+            #     vehicle._drive_straight(speed, 0.1)
+            # else:
+            #     vehicle._drive_turn(speed, 0.25, 60, speed < 0)
         else:
-            vehicle.stop()
+            # vehicle.stop()
             if char == ord('q'):
                 break
 

@@ -1,5 +1,5 @@
 ipython
-cupy
+#cupy
 numpy
 jupyter
 notebook

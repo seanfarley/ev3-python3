@@ -254,6 +254,7 @@ class TwoWheelVehicle(ev3.EV3):
 
     def _test_pos(self) -> float:
         (direction, final_pos) = self._test_args
+        time.sleep(0.3)
         if self._to_stop:
             self._to_stop = False
             self._last_t = None
@@ -261,7 +262,7 @@ class TwoWheelVehicle(ev3.EV3):
             return -1
         if not self._last_t:
             first_call = True
-            wait = 0.1
+            wait = 0.3
         else:
             first_call = False
             reply = self.send_direct_cmd(self._ops_pos(), global_mem=8)
@@ -270,6 +271,7 @@ class TwoWheelVehicle(ev3.EV3):
             if direction > 0 and self._pos[0] >= final_pos[0] or \
                direction < 0 and self._pos[0] <= final_pos[0]:
                 self._last_t = None
+                self.stop()
                 return -1
             delta_t = time.time() - self._last_t
             delta_pos = [self._pos[0] - self._last_pos[0],
@@ -289,6 +291,7 @@ class TwoWheelVehicle(ev3.EV3):
                 wait = rest_t
             else:
                 wait = delta_t_new
+        time.sleep(0.5)
         return wait
 
     def move(self, speed: int, turn: int) -> None:
